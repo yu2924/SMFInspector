@@ -10,7 +10,7 @@ Quick & dirty implementation with JUCE.
 
 ## Requirement
 
-* JUCE framework: [download](https://juce.com/get-juce/download), [repository](https://github.com/juce-framework/JUCE)
+* JUCE framework 7.0.1: [download](https://juce.com/get-juce/download), [repository](https://github.com/juce-framework/JUCE)
 * Projucer: [download](https://juce.com/discover/projucer), or build from source
 * C++ build tools: Visual Studio, Xcode, etc.
 
