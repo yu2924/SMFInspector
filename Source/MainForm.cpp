@@ -223,12 +223,13 @@ MainForm::MainForm ()
     //[Constructor] You can add your own custom stuff here..
 	mBrowseButton->onClick = [this]()
 	{
-		mFileChooser.reset(new juce::FileChooser("open SMF", juce::File(), "*.mid;*.rmi"));
-		mFileChooser->launchAsync(juce::FileBrowserComponent::FileChooserFlags::openMode | juce::FileBrowserComponent::FileChooserFlags::canSelectFiles, [this](const juce::FileChooser& fd)
+		std::shared_ptr<juce::FileChooser> fcdlg = std::make_shared<juce::FileChooser>("open SMF", juce::File(), "*.mid;*.rmi");
+		fcdlg->launchAsync(juce::FileBrowserComponent::FileChooserFlags::openMode | juce::FileBrowserComponent::FileChooserFlags::canSelectFiles, [this, fcdlg](const juce::FileChooser& fc) mutable
 		{
-			juce::File path = fd.getResult();
+			juce::File path = fc.getResult();
 			if(path == juce::File()) return;
 			openContent(path);
+			fcdlg.reset();
 		});
 	};
 	mClearButton->onClick = [this]()
@@ -273,8 +274,8 @@ MainForm::MainForm ()
 	};
 	mSysexExportButton->onClick = [this]()
 	{
-		mFileChooser.reset(new juce::FileChooser("sysex save: choose folder"));
-		mFileChooser->launchAsync(juce::FileBrowserComponent::FileChooserFlags::openMode | juce::FileBrowserComponent::FileChooserFlags::canSelectDirectories, [this](const juce::FileChooser& fc)
+		std::shared_ptr<juce::FileChooser> fcdlg = std::make_shared<juce::FileChooser>("sysex save: choose folder");
+		fcdlg->launchAsync(juce::FileBrowserComponent::FileChooserFlags::openMode | juce::FileBrowserComponent::FileChooserFlags::canSelectDirectories, [this, fcdlg](const juce::FileChooser& fc) mutable
 		{
 			juce::File dir = fc.getResult();
 			if((dir == juce::File()) || !dir.isDirectory()) return;
@@ -306,6 +307,7 @@ MainForm::MainForm ()
 					ievsearch = indices.back();
 				}
 			}
+			fcdlg.reset();
 		});
 	};
 	mSMFParser.reset(SMFParser::createInstance());

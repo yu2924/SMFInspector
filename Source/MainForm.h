@@ -63,7 +63,6 @@ public:
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     juce::File mSmfPath;
-    std::unique_ptr<juce::FileChooser> mFileChooser;
 	std::unique_ptr<SMFParser> mSMFParser;
 	juce::OwnedArray<juce::TableListBoxModel> mTrackModels;
     //[/UserVariables]
